@@ -26,7 +26,7 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    proof = 15000000
     while valid_proof(block_string, proof) is False:
         proof+=1
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
