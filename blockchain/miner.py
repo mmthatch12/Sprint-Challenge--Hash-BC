@@ -6,6 +6,7 @@ import sys
 from uuid import uuid4
 
 from timeit import default_timer as timer
+import json
 
 import random
 
@@ -40,11 +41,16 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-    guess = f"{last_hash}{proof}".encode()
-    guess_hash = hashlib.sha256(guess).hexdigest()
+    
 
     # TODO: Your code here!
-    pass
+    p_guess = f"{proof}".encode()
+    p_hash = hashlib.sha256(p_guess).hexdigest()
+
+
+    l_proof = f"{last_hash}".encode()
+    l_hash = hashlib.sha256(l_proof).hexdigest()
+    return l_hash[-6:] == p_hash[:6]
 
 
 if __name__ == '__main__':
