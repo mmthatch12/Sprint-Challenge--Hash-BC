@@ -30,7 +30,16 @@ Explain in detail the workings of a dynamic array:
 
 Explain how blockchain networks remain in consensus:
 * What does a node do if it gets a message from another in the network with a new block?
+    When a solution is discovered, a block is mined and it is added to the chain by the node that discovered it, or the first one it was reported to - assuming the node finds the solution to be valid. If it is a valid solution, the node will hash the previous block and add it to the new block, and add the rest of the properties, including a timestamp, index, and the list of pending transactions, which are now confirmed. It then shares the new block with the nodes in its network, which check the new block to make sure that it has an index one higher than the last block, a previous hash that matches the previous block, and a valid solution. If these checks pass, then the new block is added and spreads through the network, bearing in mind that consensus is determined by the longest valid chain.
 * Why can't someone cheat by changing a transaction from an earlier block to give themselves coins?
+    This distribution means that the chain itself is nearly impossible to assault. We’ve learned that to change the chain itself, we need to redo the previous hash stored in all subsequent blocks. But as described above, it would take a vast amount of computing power to do so.
+    Let’s say the chain is on block 1000, and we want to make a change to a transaction stored in block 98 to change a record in the ledger to give money to ourselves, instead of the intended recipient. Making this change is trivial, we simply open up our copy of the blockchain and edit the transaction.
+
+    However, we now have a problem. The previous hash stored in block 99 now no longer matches the hash of block 98. If you change even one character or digit, the hash is completely different. So if we try to share our changed blockchain as the valid one, everyone will reject it because it has a bad hash.
+
+    We could just chop off the the bad hash, but then our chain gets rejected because it’s not the longest. The only recourse would be to mine new blocks and make a longer chain.
+    This still doesn’t help. The biggest problem is that we are not alone. Everyone else mining is adding to the end of the chain. So not only do we need the hardware to solve this problem, but we need to outrun everyone else, because every 10 minutes, they add another block to the chain and move the goalpost farther away.
+    
 
 ## Project Set Up
 
